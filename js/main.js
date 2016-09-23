@@ -223,6 +223,9 @@ function drawLine(ctx, x1, y1, x2, y2) {
 }
 
 function draw(ctx, grid, distances) {
+  ctx.canvas.height = window.innerHeight - 40;
+  ctx.canvas.width = window.innerWidth / 2 - 40;
+
   padding_x = Math.ceil(ctx.canvas.width / grid.cols);
   padding_y = Math.ceil(ctx.canvas.height / grid.rows);
 
@@ -276,7 +279,9 @@ $(function() {
   var distances = start.distances();
 
   var ctx = $('#maze').get(0).getContext('2d');
-  ctx.canvas.height = window.innerHeight - 40;
-  ctx.canvas.width = window.innerWidth / 2 - 40;
   draw(ctx, grid, distances);
+
+  $(window).resize(function() {
+    draw(ctx, grid, distances);
+  });
 });
