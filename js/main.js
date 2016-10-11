@@ -223,13 +223,13 @@ function drawLine(ctx, x1, y1, x2, y2) {
 }
 
 function draw(ctx, grid, distances) {
-  padding_x = Math.ceil(ctx.canvas.width / grid.cols);
-  padding_y = Math.ceil(ctx.canvas.height / grid.rows);
+  var padding_x = Math.ceil(ctx.canvas.width / grid.cols / 2);
+  var padding_y = Math.ceil(ctx.canvas.height / grid.rows / 2);
 
   ctx.fillStyle = 'white';
   ctx.strokeStyle = 'black';
   ctx.lineWidth = 2.0;
-  ctx.font = '8px serif';
+  ctx.font = '12px serif';
   ctx.imageSmoothingEnabled = false;
   ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
   ctx.fillStyle = '#ccc';
@@ -252,16 +252,16 @@ function draw(ctx, grid, distances) {
     if (!cell.is_linked(cell.east)) { drawLine(ctx, x2, y1, x2, y2); }
     if (!cell.is_linked(cell.south)) { drawLine(ctx, x1, y2, x2, y2); }
 
-    if (false && cell.hidden) {
+    if (cell.hidden) {
       ctx.fillRect(x1, y1, box_width, box_height);
     } 
-    if (false && cell.frontier && distances) {
+    if (cell.frontier && distances) {
       var d = distances.get(cell);
       if (d) {
         ctx.fillStyle = 'red';
         window.console.log(d[0]);
         ctx.fillText(d[0], x1 + box_width / 3,
-                     y1 + box_height / 2, box_width * 2 /3);
+                     y1 + box_height / 2, box_width * 2 / 3);
 	      ctx.fillStyle = '#ccc';
       }
     }
@@ -269,7 +269,7 @@ function draw(ctx, grid, distances) {
 }
 
 $(function() {
-  grid = new Grid(40, 40);
+  var grid = new Grid(10, 10);
   recursive_backtracker_on(grid);
   var start = grid.random_cell();
   start.reveal();
